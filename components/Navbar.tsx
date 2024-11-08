@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FaHome, FaTachometerAlt, FaExclamationCircle } from 'react-icons/fa';
 
+
 const Navbar = () => {
   return (
     <nav className="flex justify-between items-center py-4 px-8 bg-[#0d0d0d] text-gray-300 shadow-md">
