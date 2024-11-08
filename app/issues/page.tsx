@@ -1,27 +1,34 @@
-'use client'
-import { useState } from 'react';
+"use client"; // This makes the component a client component
+
+import { useState } from "react";
 
 const page = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [loading,setLoading] = useState(false)
-  const handleSubmit = async (e:any) => {
+  // Now useRouter will work in this component
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    setLoading(true)
-    const response = await fetch('/api/issues', {
-      method: 'POST',
+    setLoading(true);
+
+    const response = await fetch("/api/issues", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json', // Fixed typo
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ title, description }),
     });
-    setLoading(false)
+
+    setLoading(false); // Set loading state to false after request is complete
+
     if (response.ok) {
-      alert('Issue created successfully');
-      setTitle('');
-      setDescription('');
+      alert("Issue created successfully");
+      setTitle("");
+      setDescription("");
+      // Navigate to dashboard after success
     } else {
-      alert('Error creating issue');
+      alert("Error creating issue");
     }
   };
 
@@ -29,20 +36,25 @@ const page = () => {
     return (
       <div className="w-screen h-screen absolute inset-0 z-10 bg-white bg-opacity-30 backdrop-blur-md flex items-center justify-center">
         <div className="w-[300px] p-6 bg-gray-800 text-white rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4">
-          <div className="text-lg font-semibold">Please Wait, We are updating your Issue</div>
+          <div className="text-lg font-semibold">
+            Please Wait, We are updating your Issue
+          </div>
           <div className="w-8 h-8 border-4 border-t-4 border-blue-600 rounded-full animate-spin"></div>
         </div>
       </div>
     );
   };
-  
+
   return (
     <div className="h-[91.1vh] flex flex-col items-center bg-gray-950 w-full p-6 space-y-4">
-      {loading && <Loading/>}
+      {loading && <Loading />}
       <div className="w-[50%] space-y-7 bg-gray-700 p-5 rounded-lg">
         <form onSubmit={handleSubmit} className="space-y-7">
           <div className="max-w-3xl">
-            <label htmlFor="title" className="block text-sm font-medium text-black">
+            <label
+              htmlFor="title"
+              className="block text-sm mb-2 ms-2 font-medium text-black"
+            >
               Title
             </label>
             <input
@@ -56,7 +68,10 @@ const page = () => {
           </div>
 
           <div className="max-w-3xl">
-            <label htmlFor="description" className="block text-sm font-medium text-black">
+            <label
+              htmlFor="description"
+              className="block text-sm mb-2 ms-2 font-medium text-black"
+            >
               Description
             </label>
             <textarea
