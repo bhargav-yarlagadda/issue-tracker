@@ -9,7 +9,10 @@ const IssueSchema = z.object({
   description: z.string().min(1),
 });
 
-
+export async function GET(request: NextRequest) {
+  const data = await prisma.issue.findMany();
+  return NextResponse.json({ message: "Successfully retrieved data", data: data }, { status: 200 });
+}
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -28,4 +31,30 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json({ message: "Issue created successfully" ,issue:newIssue}, { status: 201 });
+}
+
+
+
+export async function PUT(request: NextRequest, { params }: { params: { issueId: string } }) {
+  const { issueId } = params;
+  const body = await request.json();
+  const validation = IssueSchema.safeParse(body);
+
+  if (!validation.success) {
+    return NextResponse.json(validation.error.errors, { status: 400 });
+  }
+
+  try {
+    const updatedIssue = await prisma.issue.update({
+      where: { id: parseInt(issueId) },
+      data: {
+        title: body.title,
+        description: body.description,
+        status: body.status,
+      },
+    });
+    return NextResponse.json({ message: "Issue updated successfully", issue: updatedIssue }, { status: 200 });
+  } catch (error:any) {
+    return NextResponse.json({ message: "Error updating issue", error: error.message }, { status: 500 });
+  }
 }

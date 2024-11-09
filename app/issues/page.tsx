@@ -1,14 +1,13 @@
 "use client"; // This makes the component a client component
 
 import { useState } from "react";
-
 const page = () => {
   // Now useRouter will work in this component
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit  = async (e: any) => {
     e.preventDefault(); // Prevent the default form submission behavior
     setLoading(true);
 
@@ -23,7 +22,6 @@ const page = () => {
     setLoading(false); // Set loading state to false after request is complete
 
     if (response.ok) {
-      alert("Issue created successfully");
       setTitle("");
       setDescription("");
       // Navigate to dashboard after success
@@ -87,9 +85,9 @@ const page = () => {
           <div className="max-w-3xl">
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white font-thin rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 px-4 bg-blue-600 text-white font-thin rounded-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              New Issue
+             Raise New Issue
             </button>
           </div>
         </form>
